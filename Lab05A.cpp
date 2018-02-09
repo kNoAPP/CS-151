@@ -3,6 +3,9 @@
  *
  *  Created on: Feb 8, 2018
  *  Author: Alden Bansemer
+ *  Notes:
+ *    This program is related closely to Lab05B. In this version, the program asks for a key, accesses the
+ *    Lab05A-Input.txt file, encrypts it with the key, and outputs it to Lab05A-Output.txt.
  */
 
 
@@ -37,35 +40,35 @@ public:
 };
 
 int Lab05A() {
-	ifstream inputFile("Lab05A-Input.txt");
-	ofstream outputFile("Lab05A-Output.txt", ofstream::out | ofstream::trunc);
+	ifstream inputFile("Lab05A-Input.txt"); //Input file
+	ofstream outputFile("Lab05A-Output.txt", ofstream::out | ofstream::trunc); //Output file with automatic clearing
 
 	if(inputFile) {
 		if(outputFile) {
 			int key = -21;
 			do {
 				cout << "Please enter an encryption key (-20 to 20): ";
-				cin >> key;
+				cin >> key; //Getting a key
 
 				if(!(-20 <= key && key <= 20)) cout << "That is not a valid key!\n\n";
-			} while(!(-20 <= key && key <= 20));
+			} while(!(-20 <= key && key <= 20)); //Input validation
 
 			cout << "Encrypting to Lab05A-Output.txt..." << endl;
 
-			EncryptString es(key);
+			EncryptString es(key); //Prepare the EncryptString object
 			string line = "";
-			while(!inputFile.eof()) {
-				getline(inputFile, line);
-				es.setMessage(line);
-				es.encrypt();
-				outputFile << es.getMessage() << endl;
+			while(!inputFile.eof()) { //Tick through each line in file
+				getline(inputFile, line); //Read the line (with spaces)
+				es.setMessage(line); //Set input
+				es.encrypt(); //Encrypt input
+				outputFile << es.getMessage() << endl; //Output the result
 			}
 
 			cout << "Encryption complete.";
 			outputFile.close();
-		} else cout << "An error occurred while opening the Lab05A-Output.txt file!" << endl;
+		} else cout << "An error occurred while opening the Lab05A-Output.txt file!" << endl; //Error opening output file
 		inputFile.close();
-	} else cout << "An error occurred while opening the Lab05A-Input.txt file!" << endl;
+	} else cout << "An error occurred while opening the Lab05A-Input.txt file!" << endl; //Error opening input file
 	return 0;
 }
 
