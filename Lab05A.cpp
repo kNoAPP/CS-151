@@ -29,12 +29,22 @@ public:
 	int getKey() { return key; } //Get the key
 	void encrypt() { //Encrypt the message by advancing each character forward the key's value.
 		string encrypted = "";
-		for(char c : msg) encrypted += (c + key);
+		for(char c : msg) {
+			c += key;
+			if(c > 126) c -= 94;
+			if(c < 32) c += 94;
+			encrypted += c;
+		}
 		msg = encrypted;
 	}
 	void decrypt() { //Decrypt the message by retracting each character backward the key's value.
 		string decrypted = "";
-		for(char c : msg) decrypted += (c - key);
+		for(char c : msg) {
+			c -= key;
+			if(c > 126) c -= 94;
+			if(c < 32) c += 94;
+			decrypted += c;
+		}
 		msg = decrypted;
 	}
 };
