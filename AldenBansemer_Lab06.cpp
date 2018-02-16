@@ -24,7 +24,7 @@ private:
 	function<int()> f;
 	bool flush;
 public:
-	Lab(string name, string desc, function<int()> f, bool flush = false) { //function<[return_type]([args]) f
+	Lab(string name, string desc, function<int()> f, bool flush = false) { //function<[return_type]([args])> f
 		this->name = name;
 		this->desc = desc;
 		this->f = f;
@@ -46,7 +46,7 @@ public:
 };
 
 int main() {
-	const int VERSIONS = 7; //Indicator of how many labs have been completed.
+	const int VERSIONS = 10; //Indicator of how many labs have been completed.
 	Lab labs[VERSIONS] = { //Declaring all known labs
 			Lab("Lab01", "Sorting Arrays", Lab01, false),
 			Lab("Lab02", "Manipulating Movie Data", Lab02, true),
@@ -54,7 +54,10 @@ int main() {
 			Lab("Lab04A", "Capitalizer", Lab04A, false),
 			Lab("Lab04B", "Password Verification", Lab04B, false),
 			Lab("Lab05A", "File Encryption Filter", Lab05A, true),
-			Lab("Lab05B", "File Decryption Filter", Lab05B, true)};
+			Lab("Lab05B", "File Decryption Filter", Lab05B, true),
+			Lab("Lab06A", "Joke with Punchline", Lab06A, false),
+			Lab("Lab06B", "Recording Sales", Lab06B, true),
+			Lab("Lab06C", "Colored HTML", Lab06C, true)};
 	string rinput = "";
 	int cinput = -1;
 
