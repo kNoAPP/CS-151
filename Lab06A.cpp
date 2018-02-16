@@ -5,7 +5,8 @@
  *  Author: Alden Bansemer
  *  Notes:
  *    This program takes two input files (a joke and a punchline) and uses both to deliever a pun. First,
- *    the first file's contents are shown to the user as the "joke."
+ *    the first file's contents are shown to the user as the "joke." Then, the second file's last line
+ *    is show as the "punchline."
  */
 
 
@@ -31,17 +32,21 @@ int Lab06A() {
 			cout << line << endl;
 		}
 
+		//Determine line count
 		int lines = 0;
 		while(getline(inputFile2, line)) lines++;
 		inputFile2.close();
 
+		//Refresh buffer and get to last line
 		ifstream inputFile2("Lab06A-Punchline.txt"); //Input file
 		for(int i=0; i<lines; i++) getline(inputFile2, line);
 
+		//Display last line
 		Sleep(2000);
 		cout << line << endl;
 		Sleep(1000);
 
+		//Close streams
 		inputFile1.close();
 		inputFile2.close();
 	} else cout << "An error occurred while opening one of the Lab06A txt files!" << endl; //Error opening input file
