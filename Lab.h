@@ -25,3 +25,5 @@ int Lab06B();
 int Lab06C();
 int Lab07A();
 int Lab07B();
+int Lab08A();
+int Lab08B();

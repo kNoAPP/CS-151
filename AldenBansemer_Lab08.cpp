@@ -46,7 +46,7 @@ public:
 };
 
 int main() {
-	const int VERSIONS = 12; //Indicator of how many labs have been completed.
+	const int VERSIONS = 14; //Indicator of how many labs have been completed.
 	Lab labs[VERSIONS] = { //Declaring all known labs
 			Lab("Lab01", "Sorting Arrays", Lab01, false),
 			Lab("Lab02", "Manipulating Movie Data", Lab02, true),
@@ -59,7 +59,9 @@ int main() {
 			Lab("Lab06B", "Recording Sales", Lab06B, true),
 			Lab("Lab06C", "Colored HTML", Lab06C, true),
 			Lab("Lab07A", "Recursive Conversion", Lab07A, false),
-			Lab("Lab07B", "Multiplying using Recursion", Lab07B, true)};
+			Lab("Lab07B", "Multiplying using Recursion", Lab07B, true),
+			Lab("Lab08A", "Polymorphism", Lab08A, false),
+			Lab("Lab08B", "Virtual Encryption", Lab08B, true)};
 	string rinput = "";
 	int cinput = -1;
 
