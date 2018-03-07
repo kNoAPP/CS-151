@@ -7,13 +7,18 @@
  *    This is the Hub program containing all projects we've done so far in CS-151. Each program
  *    has an object Lab written into a labs array. These labs are listed for the user and can
  *    be run by selecting the number appearing next to them.
+ *
+ *  Rants:
+ *    Honestly, NIC should update their compiler. Teaching C++ with something two years out of
+ *    date is a hassle. This version does not utilize the functional library. As such, way
+ *    more code has been written than needs to be.
  */
 
 #include "Lab.h" //Header File
 #include <iostream>
 #include <string>
 #include <sstream>
-#include <functional> //Allows me to store function names
+//#include <functional> //Allows me to store function names
 #include <string>
 
 using namespace std;
@@ -21,47 +26,95 @@ using namespace std;
 class Lab { //Lab Class, proving a storage unit for names, desc, functions, and flushes for each lab.
 private:
 	string name, desc;
-	function<int()> f;
+	int id; //Yuck
+	//function<int()> f;
 	bool flush;
 public:
-	Lab(string name, string desc, function<int()> f, bool flush = false) { //function<[return_type]([args])> f
+	Lab(string name, int id, string desc, /*function<int()> f,*/ bool flush = false) { //function<[return_type]([args])> f
 		this->name = name;
+		this->id = id; //Yuck
 		this->desc = desc;
-		this->f = f;
+		//this->f = f;
 		this->flush = flush;
 	}
 
 	string getName() { return name; }
+	int getId() { return id; } //Yuck
 	string getDesc() { return desc; }
-	function<int()> getFunction() { return f; }
+	//function<int()> getFunction() { return f; }
 	bool shouldFlush() { return flush; }
-	int runFunction() {
-		int out = f();
+	void /*int*/ runFunction() {
+		//int out = f();
+		switch(id) {
+		case 1:
+			Lab01();
+			break;
+		case 2:
+			Lab02();
+			break;
+		case 3:
+			Lab03();
+			break;
+		case 4:
+			Lab04A();
+			break;
+		case 5:
+			Lab04B();
+			break;
+		case 6:
+			Lab04A();
+			break;
+		case 7:
+			Lab04B();
+			break;
+		case 8:
+			Lab06A();
+			break;
+		case 9:
+			Lab06B();
+			break;
+		case 10:
+			Lab06C();
+			break;
+		case 11:
+			Lab07A();
+			break;
+		case 12:
+			Lab07B();
+			break;
+		case 13:
+			Lab08A();
+			break;
+		case 14:
+			Lab08B();
+			break;
+		}
 		if(flush) { //Sometimes the cin buffer is not cleared before returning here
 			cin.clear(); //This clears the buffer
 			cin.ignore(100, '\n'); //This ignores any loaded input
 		}
-		return out;
+		//return out;
 	}
 };
 
 int main() {
 	const int VERSIONS = 14; //Indicator of how many labs have been completed.
+	//To restore functional, add in function declarations to the array below. Remove ids.
 	Lab labs[VERSIONS] = { //Declaring all known labs
-			Lab("Lab01", "Sorting Arrays", Lab01, false),
-			Lab("Lab02", "Manipulating Movie Data", Lab02, true),
-			Lab("Lab03", "ASCII Encryption", Lab03, true),
-			Lab("Lab04A", "Capitalizer", Lab04A, false),
-			Lab("Lab04B", "Password Verification", Lab04B, false),
-			Lab("Lab05A", "File Encryption Filter", Lab05A, true),
-			Lab("Lab05B", "File Decryption Filter", Lab05B, true),
-			Lab("Lab06A", "Joke with Punchline", Lab06A, false),
-			Lab("Lab06B", "Recording Sales", Lab06B, true),
-			Lab("Lab06C", "Colored HTML", Lab06C, true),
-			Lab("Lab07A", "Recursive Conversion", Lab07A, false),
-			Lab("Lab07B", "Multiplying using Recursion", Lab07B, true),
-			Lab("Lab08A", "Polymorphism", Lab08A, false),
-			Lab("Lab08B", "Virtual Encryption", Lab08B, true)};
+			Lab("Lab01", 1, "Sorting Arrays", false),
+			Lab("Lab02", 2, "Manipulating Movie Data", true),
+			Lab("Lab03", 3, "ASCII Encryption", true),
+			Lab("Lab04A", 4, "Capitalizer", false),
+			Lab("Lab04B", 5, "Password Verification", false),
+			Lab("Lab05A", 6, "File Encryption Filter", true),
+			Lab("Lab05B", 7, "File Decryption Filter", true),
+			Lab("Lab06A", 8, "Joke with Punchline", false),
+			Lab("Lab06B", 9, "Recording Sales", true),
+			Lab("Lab06C", 10, "Colored HTML", true),
+			Lab("Lab07A", 11, "Recursive Conversion", false),
+			Lab("Lab07B", 12, "Multiplying using Recursion", true),
+			Lab("Lab08A", 13, "Polymorphism", false),
+			Lab("Lab08B", 14, "Virtual Encryption", true)};
 	string rinput = "";
 	int cinput = -1;
 

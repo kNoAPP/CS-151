@@ -26,7 +26,8 @@ int Lab07B() {
 }
 
 int multiply(int x, int y) {
-	if(y != 0) return x + multiply(x, y > 0 ? --y : ++y); //If y isn't 0, use recursion.
+	if(y < 0) return multiply(x*-1, y*-1);
+	else if(y != 0) return x + multiply(x, --y); //Use recursion to add
 	else return 0; //Return 0 if y hits 0.
 }
 
