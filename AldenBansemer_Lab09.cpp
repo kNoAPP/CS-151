@@ -2,7 +2,7 @@
  * AldenBansemer_LabXX.cpp
  *
  *  Created on: Feb 6, 2018
- *  Author: alldo
+ *  Author: Alden Bansemer
  *  Notes:
  *    This is the Hub program containing all projects we've done so far in CS-151. Each program
  *    has an object Lab written into a labs array. These labs are listed for the user and can
@@ -88,6 +88,9 @@ public:
 		case 14:
 			Lab08B();
 			break;
+		case 15:
+			Lab09AB();
+			break;
 		}
 		if(flush) { //Sometimes the cin buffer is not cleared before returning here
 			cin.clear(); //This clears the buffer
@@ -98,7 +101,7 @@ public:
 };
 
 int main() {
-	const int VERSIONS = 14; //Indicator of how many labs have been completed.
+	const int VERSIONS = 15; //Indicator of how many labs have been completed.
 	//To restore functional, add in function declarations to the array below. Remove ids.
 	Lab labs[VERSIONS] = { //Declaring all known labs
 			Lab("Lab01", 1, "Sorting Arrays", false),
@@ -114,7 +117,8 @@ int main() {
 			Lab("Lab07A", 11, "Recursive Conversion", false),
 			Lab("Lab07B", 12, "Multiplying using Recursion", true),
 			Lab("Lab08A", 13, "Polymorphism", false),
-			Lab("Lab08B", 14, "Virtual Encryption", true)};
+			Lab("Lab08B", 14, "Virtual Encryption", true),
+			Lab("Lab09AB", 15, "File Filter and Line Breaks", true)};
 	string rinput = "";
 	int cinput = -1;
 
