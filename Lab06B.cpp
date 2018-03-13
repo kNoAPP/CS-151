@@ -12,6 +12,7 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
+#include <sstream>
 
 using namespace std;
 
@@ -41,7 +42,7 @@ int Lab06B() {
 		for(int q=0; q<4; q++) {
 			double c = -1;
 			do {
-				cout << "Please enter sales for the " << sales[i].name << " quarter #" << to_string(q + 1) << ": ";
+				cout << "Please enter sales for the " << sales[i].name << " quarter #" << q + 1 << ": ";
 				cin >> c;
 			} while(c < 0); //Input validation
 			sales[i].sale[q] = c; //Record the input
@@ -54,7 +55,12 @@ int Lab06B() {
 			//Format each line with the data
 			string line = sales[i].name + ":";
 			for(int q=0; q<4; q++) {
-				line += " Q" + to_string(q + 1) + ": " + to_string(sales[i].sale[q]);
+				stringstream s1;
+				stringstream s2;
+				s1 << (q+1);
+				s2 << sales[i].sale[q];
+
+				line += " Q" + s1.str() + ": " + s2.str();
 				if(q != 3) line += ",";
 			}
 			outputFile << line << endl; //Output the record for the division

@@ -137,12 +137,10 @@ int main() {
 			cinput = -1;
 			getline(cin, rinput);
 			try {
-				cinput = stoi(rinput);
-			} catch(const invalid_argument& e) {
+				stringstream parse(rinput);
+				parse >> cinput;
+			} catch(...) { //Bad programing, I'm aware.
 				cout << "Please enter a valid number!\n";
-				continue;
-			} catch(const out_of_range& e) {
-				cout << "Out of range, please try again!\n";
 				continue;
 			}
 
