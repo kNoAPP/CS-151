@@ -18,6 +18,7 @@
 
 #include "Lab.h"
 #include <iostream>
+#include <stdexcept>
 
 using namespace std;
 
@@ -29,8 +30,13 @@ double mode(double *array, int size);
 int Lab02() {
 	int SIZE;
 	do {
-		cout << "How many people are your surveying? : ";
-		cin >> SIZE;
+		try { //LAB10 error checking
+			cout << "How many people are your surveying? : ";
+			cin >> SIZE;
+			if(SIZE < 1) throw invalid_argument("Selection must be greater than 0!");
+		} catch(const std::invalid_argument& e) {
+			cout << e.what() << endl;
+		}
 	} while(SIZE < 1); //Input validation
 
 	double movies[SIZE];
@@ -38,8 +44,13 @@ int Lab02() {
 
 	for(int i=0; i<SIZE; i++) {
 		do {
-			cout << "How many movies has #" << (i+1) << " seen? : ";
-			cin >> *(movies+i);
+			try { //LAB10 error checking
+				cout << "How many movies has #" << (i+1) << " seen? : ";
+				cin >> *(movies+i);
+				if(*(movies+i) < 0) throw invalid_argument("Selection must be greater than 0!");
+			} catch(const std::invalid_argument& e) {
+				cout << e.what() << endl;
+			}
 		} while(*(movies+i) < 0); //Input validation
 	}
 

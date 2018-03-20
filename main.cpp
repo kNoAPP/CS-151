@@ -7,11 +7,16 @@
  *    This is the Hub program containing all projects we've done so far in CS-151. Each program
  *    has an object Lab written into a labs array. These labs are listed for the user and can
  *    be run by selecting the number appearing next to them.
- *
  *  Rants:
  *    Honestly, NIC should update their compiler. Teaching C++ with something two years out of
  *    date is a hassle. This version does not utilize the functional library. As such, way
  *    more code has been written than needs to be.
+ *  Try-Catch Locations:
+ *    1. main.cpp
+ *    2. Lab02.cpp (x2)
+ *    3. Lab02.cpp (x2)
+ *    4. Lab04A.cpp
+ *    5. Lab04B.cpp
  */
 
 #include "Lab.h" //Header File
@@ -20,6 +25,7 @@
 #include <sstream>
 //#include <functional> //Allows me to store function names
 #include <string>
+#include <stdexcept>
 
 using namespace std;
 
@@ -91,6 +97,15 @@ public:
 		case 15:
 			Lab09AB();
 			break;
+		case 16:
+			Lab10A();
+			break;
+		case 17:
+			Lab10B();
+			break;
+		case 18:
+			Lab10C();
+			break;
 		}
 		if(flush) { //Sometimes the cin buffer is not cleared before returning here
 			cin.clear(); //This clears the buffer
@@ -101,7 +116,7 @@ public:
 };
 
 int main() {
-	const int VERSIONS = 15; //Indicator of how many labs have been completed.
+	const int VERSIONS = 18; //Indicator of how many labs have been completed.
 	//To restore functional, add in function declarations to the array below. Remove ids.
 	Lab labs[VERSIONS] = { //Declaring all known labs
 			Lab("Lab01", 1, "Sorting Arrays", false),
@@ -118,7 +133,10 @@ int main() {
 			Lab("Lab07B", 12, "Multiplying using Recursion", true),
 			Lab("Lab08A", 13, "Polymorphism", false),
 			Lab("Lab08B", 14, "Virtual Encryption", true),
-			Lab("Lab09AB", 15, "File Filter and Line Breaks", true)};
+			Lab("Lab09AB", 15, "File Filter and Line Breaks", true),
+			Lab("Lab10A", 16, "Templates and Swapping", false),
+			Lab("Lab10B", 17, "Program 16-14 w/Mods", false),
+			Lab("Lab10C", 18, "Proof of Concept for Lab10A", true)};
 	string rinput = "";
 	int cinput = -1;
 
@@ -133,18 +151,17 @@ int main() {
 
 		//Input Validation
 		do {
-			cout << " -> ";
-			cinput = -1;
-			getline(cin, rinput);
-			try {
+			try { //LAB10 error checking
+				cout << " -> ";
+				cinput = -1;
+				getline(cin, rinput);
 				stringstream parse(rinput);
 				parse >> cinput;
-			} catch(...) { //Bad programing, I'm aware.
-				cout << "Please enter a valid number!\n";
-				continue;
-			}
 
-			if(cinput < 0 || cinput > VERSIONS) cout << "No program found under that selection!\n";
+				if(cinput < 0 || cinput > VERSIONS) throw invalid_argument("No program found under that selection!");
+			} catch(const std::invalid_argument& e) {
+				cout << e.what() << endl;
+			}
 		} while(cinput < 0 || cinput > VERSIONS);
 
 		if(cinput == 0) break; //Escaping when input = 0

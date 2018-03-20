@@ -14,6 +14,7 @@
 #include <iostream>
 #include <string>
 #include <locale>
+#include <stdexcept>
 
 using namespace std;
 
@@ -40,10 +41,14 @@ bool verifyPassword(string pass) {
 	}
 
 	//Error messages
-	if(!is8) cout << "Error: Password must be 8+ characters!" << endl;
-	if(!hasU) cout << "Error: Password must contain an uppercase letter!" << endl;
-	if(!hasL) cout << "Error: Password must contain an lowercase letter!" << endl;
-	if(!hasN) cout << "Error: Password must contain a number!" << endl;
+	try { //LAB10 error checking
+		if(!is8) throw invalid_argument("Error: Password must be 8+ characters!");
+		if(!hasU) throw invalid_argument("Error: Password must contain an uppercase letter!");
+		if(!hasL) throw invalid_argument("Error: Password must contain an lowercase letter!");
+		if(!hasN) throw invalid_argument("Error: Password must contain a number!");
+	} catch(const std::invalid_argument& e) {
+		cout << e.what() << endl;
+	}
 
 	//Return a boolean telling if the password fits the bounds
 	return is8 && hasU && hasL && hasN;

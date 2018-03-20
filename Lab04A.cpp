@@ -14,6 +14,7 @@
 #include <iostream>
 #include <string>
 #include <locale>
+#include <stdexcept>
 
 using namespace std;
 
@@ -21,8 +22,16 @@ string captalize(string s);
 
 int Lab04A() {
 	string s = ""; //Prevent null string
-	cout << "Enter a sentence: ";
-	getline(cin, s); //Set s to input
+	do {
+		try { //LAB10 error checking
+			cout << "Enter a sentence: ";
+			getline(cin, s); //Set s to input
+			if(s == "") throw invalid_argument("Please enter a valid sentence!");
+		} catch(const std::invalid_argument& e) {
+			cout << e.what() << endl;
+		}
+	} while(s == "");
+
 	cout << captalize(s) << endl; //Captalize and display output
 	return 0;
 }
