@@ -1,5 +1,5 @@
 /*
- * AldenBansemer_LabXX.cpp
+ * main.cpp
  *
  *  Created on: Feb 6, 2018
  *  Author: Alden Bansemer
@@ -11,12 +11,6 @@
  *    Honestly, NIC should update their compiler. Teaching C++ with something two years out of
  *    date is a hassle. This version does not utilize the functional library. As such, way
  *    more code has been written than needs to be.
- *  Try-Catch Locations:
- *    1. main.cpp
- *    2. Lab02.cpp (x2)
- *    3. Lab02.cpp (x2)
- *    4. Lab04A.cpp
- *    5. Lab04B.cpp
  */
 
 #include "Lab.h" //Header File
@@ -106,6 +100,9 @@ public:
 		case 18:
 			Lab10C();
 			break;
+		case 19:
+			Lab11A();
+			break;
 		}
 		if(flush) { //Sometimes the cin buffer is not cleared before returning here
 			cin.clear(); //This clears the buffer
@@ -116,7 +113,7 @@ public:
 };
 
 int main() {
-	const int VERSIONS = 18; //Indicator of how many labs have been completed.
+	const int VERSIONS = 19; //Indicator of how many labs have been completed.
 	//To restore functional, add in function declarations to the array below. Remove ids.
 	Lab labs[VERSIONS] = { //Declaring all known labs
 			Lab("Lab01", 1, "Sorting Arrays", false),
@@ -136,7 +133,8 @@ int main() {
 			Lab("Lab09AB", 15, "File Filter and Line Breaks", true),
 			Lab("Lab10A", 16, "Templates and Swapping", false),
 			Lab("Lab10B", 17, "Program 16-14 w/Mods", false),
-			Lab("Lab10C", 18, "Proof of Concept for Lab10A", true)};
+			Lab("Lab10C", 18, "Proof of Concept for Lab10A", true),
+			Lab("Lab11A", 19, "Linked Lists", false)};
 	string rinput = "";
 	int cinput = -1;
 
