@@ -103,6 +103,9 @@ public:
 		case 19:
 			Lab11A();
 			break;
+		case 20:
+			Lab11B();
+			break;
 		}
 		if(flush) { //Sometimes the cin buffer is not cleared before returning here
 			cin.clear(); //This clears the buffer
@@ -113,7 +116,7 @@ public:
 };
 
 int main() {
-	const int VERSIONS = 19; //Indicator of how many labs have been completed.
+	const int VERSIONS = 20; //Indicator of how many labs have been completed.
 	//To restore functional, add in function declarations to the array below. Remove ids.
 	Lab labs[VERSIONS] = { //Declaring all known labs
 			Lab("Lab01", 1, "Sorting Arrays", false),
@@ -134,7 +137,8 @@ int main() {
 			Lab("Lab10A", 16, "Templates and Swapping", false),
 			Lab("Lab10B", 17, "Program 16-14 w/Mods", false),
 			Lab("Lab10C", 18, "Proof of Concept for Lab10A", true),
-			Lab("Lab11A", 19, "Linked Lists", false)};
+			Lab("Lab11A", 19, "Linked Lists", false),
+			Lab("Lab11B", 20, "Animation", false)};
 	string rinput = "";
 	int cinput = -1;
 

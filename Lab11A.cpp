@@ -62,7 +62,7 @@ void LinkedList::add(double x, bool beginning) {
 void LinkedList::insert(double x, int pos) {
 	if(head != nullptr && pos > 0) {
 		ListNode *p = head;
-		while(pos != 0 && p->next != nullptr) {
+		while(pos != 1 && p->next != nullptr) {
 			p = p->next;
 			pos--;
 		}
@@ -123,19 +123,30 @@ void LinkedList::reverse() {
 	if(head != nullptr) {
 		ListNode *p = head;
 		ListNode *temp;
-		ListNode *rev;
+		ListNode *rev = nullptr;
 
-		while(p != nullptr) {
+		while(p) {
 			temp = p;
+			p = p->next;
 			temp->next = rev;
 			rev = temp;
-
-			p = p->next;
 		}
 		head = rev;
 	}
 }
 
 int Lab11A() {
+	LinkedList ll;
+	ll.add(10);
+	ll.add(12.4);
+	ll.add(18);
+	ll.print();
+	ll.reverse();
+	cout << endl;
+	ll.print();
+	cout << endl << "Location of 10: " << ll.search(10) << endl;
+	cout << "Location of 7.1: " << ll.search(7.1) << endl << endl;
+	ll.insert(5, 1);
+	ll.print();
 	return 0;
 }
