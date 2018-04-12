@@ -20,6 +20,8 @@
 //#include <functional> //Allows me to store function names
 #include <string>
 #include <stdexcept>
+#include <list>
+#include <windows.h>
 
 using namespace std;
 
@@ -29,6 +31,10 @@ private:
 	int id; //Yuck
 	//function<int()> f;
 	bool flush;
+
+	static const int VERSIONS = 21; //Indicator of how many labs have been completed.
+		//To restore functional, add in function declarations to the array below. Remove ids.
+	static const Lab labs[VERSIONS];
 public:
 	Lab(string name, int id, string desc, /*function<int()> f,*/ bool flush = false) { //function<[return_type]([args])> f
 		this->name = name;
@@ -106,6 +112,63 @@ public:
 		case 20:
 			Lab11B();
 			break;
+		case 21:
+			list<Lab> queue;
+			string result = "OK.";
+			string arg0 = "";
+			int arg1 = 0;
+
+			while(arg0 != "RUN" && arg0 != "QUIT") {
+				system("CLS");
+				displayMenu(false);
+				cout << endl << "-=-=Guide=-=-" << endl
+					 << "ADD <# program> - Add a program to the queue." << endl
+					 << "DEL - Remove last program." << endl
+					 << "RUN - Run the queue." << endl
+					 << "QUIT - Quit without running the queue."
+
+					 << endl << "-=-=-Queue=-=-" << endl;
+				if(queue.size() == 0) cout << "<Empty>" << endl;
+				else {
+					int a = 0;
+					for(Lab l : queue) {
+						a++;
+						cout << "[" << a << "] " << l.getName() << ": " << l.getDesc() << endl; //Displaying programs' information
+					}
+				}
+
+				cout << endl << result;
+				cout << endl << " -> ";
+				cin >> arg0;
+				if(arg0 == "ADD") {
+					cin >> arg1;
+					if(1 <= arg1 && arg1 <= VERSIONS) {
+						Lab l = Lab::getLab(arg1);
+						queue.push_back(l);
+						result = "OK.";
+					} else result = "Invalid selection!";
+				} else if(arg0 == "DEL") {
+					if(queue.size() > 0) {
+						queue.pop_back();
+						result = "OK.";
+					} else result = "Queue empty already!";
+				} else if(arg0 == "RUN") {
+					system("CLS");
+
+					cin.clear(); //This clears the buffer
+					cin.ignore(100, '\n'); //This ignores any loaded input
+
+					for(Lab l : queue) {
+						cout << "\n==============OUTPUT==============\n";
+						l.runFunction();
+						cout << "\n==================================\n\n";
+					}
+				} else if(arg0 == "QUIT") result = "OK.";
+				else result = "Invalid command!";
+			}
+
+			queue.clear();
+			break;
 		}
 		if(flush) { //Sometimes the cin buffer is not cleared before returning here
 			cin.clear(); //This clears the buffer
@@ -113,12 +176,21 @@ public:
 		}
 		//return out;
 	}
+
+	static Lab getLab(int id) { return labs[id - 1]; }
+	static int getVersions() { return VERSIONS; }
+	static void displayMenu(bool withQuit) {
+		cout << "ALDEN BANSEMER CS-151 PROGRAM MENU" << endl
+			 << "==================================" << endl;
+		if(withQuit) cout << "0) Quit: Leave this library" << endl;
+		for(int i=0; i<Lab::getVersions(); i++) {
+			Lab l = labs[i];
+			cout << l.getId() << ") " << l.getName() << ": " << l.getDesc() << endl; //Displaying programs' information
+		}
+	}
 };
 
-int main() {
-	const int VERSIONS = 20; //Indicator of how many labs have been completed.
-	//To restore functional, add in function declarations to the array below. Remove ids.
-	Lab labs[VERSIONS] = { //Declaring all known labs
+const Lab Lab::labs[VERSIONS] = { //Declaring all known labs
 			Lab("Lab01", 1, "Sorting Arrays", false),
 			Lab("Lab02", 2, "Manipulating Movie Data", true),
 			Lab("Lab03", 3, "ASCII Encryption", true),
@@ -138,18 +210,15 @@ int main() {
 			Lab("Lab10B", 17, "Program 16-14 w/Mods", false),
 			Lab("Lab10C", 18, "Proof of Concept for Lab10A", true),
 			Lab("Lab11A", 19, "Linked Lists", false),
-			Lab("Lab11B", 20, "Animation", false)};
+			Lab("Lab11B", 20, "Animation", false),
+			Lab("Lab13", 21, "Create a Program Queue", false)};
+
+int main() {
 	string rinput = "";
 	int cinput = -1;
 
 	while(true) {
-		cout << "ALDEN BANSEMER CS-151 PROGRAM MENU" << endl
-			 << "==================================" << endl
-			 << "0) Quit: Leave this library" << endl;
-		for(int i=0; i<VERSIONS; i++) {
-			Lab l = labs[i];
-			cout << i + 1 << ") " << l.getName() << ": " << l.getDesc() << endl; //Displaying programs' information
-		}
+		Lab::displayMenu(true);
 
 		//Input Validation
 		do {
@@ -160,16 +229,15 @@ int main() {
 				stringstream parse(rinput);
 				parse >> cinput;
 
-				if(cinput < 0 || cinput > VERSIONS) throw invalid_argument("No program found under that selection!");
-			} catch(const std::invalid_argument& e) {
-				cout << e.what() << endl;
-			}
-		} while(cinput < 0 || cinput > VERSIONS);
+				if(cinput < 0 || cinput > Lab::getVersions()) throw invalid_argument("No program found under that selection!");
+			} catch(const std::invalid_argument& e) { cout << e.what() << endl; }
+		} while(cinput < 0 || cinput > Lab::getVersions());
 
 		if(cinput == 0) break; //Escaping when input = 0
+
 		cout << "\n==============OUTPUT==============\n";
-		labs[cinput - 1].runFunction(); //Running a program
-		cout << "\n==================================\n\n";
+		Lab::getLab(cinput).runFunction(); //Running a program
+		cout << "\n==============FINISH==============\n\n";
 	}
 
 	return 0;
