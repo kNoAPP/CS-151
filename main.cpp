@@ -161,7 +161,7 @@ public:
 					for(Lab l : queue) {
 						cout << "\n==============OUTPUT==============\n";
 						l.runFunction();
-						cout << "\n==================================\n\n";
+						cout << "\n==============FINISH==============\n\n";
 					}
 				} else if(arg0 == "QUIT") result = "OK.";
 				else result = "Invalid command!";
