@@ -148,5 +148,10 @@ int Lab11A() {
 	cout << "Location of 7.1: " << ll.search(7.1) << endl << endl;
 	ll.insert(5, 1);
 	ll.print();
+
+	cout << "====" << endl;
+	ListNode *p = new ListNode(56.4);
+	p = new ListNode(34.2, p);
+	cout << (*p).value << endl << p->value;
 	return 0;
 }

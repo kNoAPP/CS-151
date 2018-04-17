@@ -1,4 +1,4 @@
-North: Q1: 5, Q2: 3, Q3: 2, Q4: 4
-South: Q1: 3, Q2: 5, Q3: 7, Q4: 8
-East: Q1: 5, Q2: 3, Q3: 67, Q4: 3
-West: Q1: 6, Q2: 3, Q3: 6, Q4: 4
+North: Q1: 4, Q2: 4, Q3: 4, Q4: 4
+South: Q1: 4, Q2: 4, Q3: 4, Q4: 4
+East: Q1: 4, Q2: 4, Q3: 4, Q4: 4
+West: Q1: 4, Q2: 4, Q3: 4, Q4: 4

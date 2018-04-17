@@ -125,7 +125,7 @@ public:
 					 << "ADD <# program> - Add a program to the queue." << endl
 					 << "DEL - Remove last program." << endl
 					 << "RUN - Run the queue." << endl
-					 << "QUIT - Quit without running the queue."
+					 << "QUIT - Quit without running the queue." << endl
 
 					 << endl << "-=-=-Queue=-=-" << endl;
 				if(queue.size() == 0) cout << "<Empty>" << endl;
