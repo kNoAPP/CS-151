@@ -122,7 +122,7 @@ public:
 				system("CLS");
 				displayMenu(false);
 				cout << endl << "-=-=Guide=-=-" << endl
-					 << "ADD <# program> - Add a program to the queue AA." << endl
+					 << "ADD <# program> - Add a program to the queue." << endl
 					 << "DEL - Remove last program." << endl
 					 << "RUN - Run the queue." << endl
 					 << "QUIT - Quit without running the queue." << endl
