@@ -32,7 +32,7 @@ private:
 	//function<int()> f;
 	bool flush;
 
-	static const int VERSIONS = 21; //Indicator of how many labs have been completed.
+	static const int VERSIONS = 22; //Indicator of how many labs have been completed.
 		//To restore functional, add in function declarations to the array below. Remove ids.
 	static const Lab labs[VERSIONS];
 public:
@@ -113,61 +113,10 @@ public:
 			Lab11B();
 			break;
 		case 21:
-			list<Lab> queue;
-			string result = "OK.";
-			string arg0 = "";
-			int arg1 = 0;
-
-			while(arg0 != "RUN" && arg0 != "QUIT") {
-				system("CLS");
-				displayMenu(false);
-				cout << endl << "-=-=Guide=-=-" << endl
-					 << "ADD <# program> - Add a program to the queue." << endl
-					 << "DEL - Remove last program." << endl
-					 << "RUN - Run the queue." << endl
-					 << "QUIT - Quit without running the queue." << endl
-
-					 << endl << "-=-=-Queue=-=-" << endl;
-				if(queue.size() == 0) cout << "<Empty>" << endl;
-				else {
-					int a = 0;
-					for(Lab l : queue) {
-						a++;
-						cout << "[" << a << "] " << l.getName() << ": " << l.getDesc() << endl; //Displaying programs' information
-					}
-				}
-
-				cout << endl << result;
-				cout << endl << " -> ";
-				cin >> arg0;
-				if(arg0 == "ADD") {
-					cin >> arg1;
-					if(1 <= arg1 && arg1 <= VERSIONS) {
-						Lab l = Lab::getLab(arg1);
-						queue.push_back(l);
-						result = "OK.";
-					} else result = "Invalid selection!";
-				} else if(arg0 == "DEL") {
-					if(queue.size() > 0) {
-						queue.pop_back();
-						result = "OK.";
-					} else result = "Queue empty already!";
-				} else if(arg0 == "RUN") {
-					system("CLS");
-
-					cin.clear(); //This clears the buffer
-					cin.ignore(100, '\n'); //This ignores any loaded input
-
-					for(Lab l : queue) {
-						cout << "\n==============OUTPUT==============\n";
-						l.runFunction();
-						cout << "\n==============FINISH==============\n\n";
-					}
-				} else if(arg0 == "QUIT") result = "OK.";
-				else result = "Invalid command!";
-			}
-
-			queue.clear();
+			Lab13();
+			break;
+		case 22:
+			Lab14();
 			break;
 		}
 		if(flush) { //Sometimes the cin buffer is not cleared before returning here
@@ -211,7 +160,8 @@ const Lab Lab::labs[VERSIONS] = { //Declaring all known labs
 			Lab("Lab10C", 18, "Proof of Concept for Lab10A", true),
 			Lab("Lab11A", 19, "Linked Lists", false),
 			Lab("Lab11B", 20, "Animation", false),
-			Lab("Lab13", 21, "Create a Program Queue", false)};
+			Lab("Lab13", 21, "Create a Program Queue", false),
+			Lab("Lab14", 22, "Binary Trees", true)};
 
 int main() {
 	string rinput = "";
@@ -240,5 +190,64 @@ int main() {
 		cout << "\n==============FINISH==============\n\n";
 	}
 
+	return 0;
+}
+
+int Lab13() {
+	list<Lab> queue;
+	string result = "OK.";
+	string arg0 = "";
+	int arg1 = 0;
+
+	while(arg0 != "RUN" && arg0 != "QUIT") {
+		system("CLS");
+		Lab::displayMenu(false);
+		cout << endl << "-=-=Guide=-=-" << endl
+			 << "ADD <# program> - Add a program to the queue." << endl
+			 << "DEL - Remove last program." << endl
+			 << "RUN - Run the queue." << endl
+			 << "QUIT - Quit without running the queue." << endl
+
+			 << endl << "-=-=-Queue=-=-" << endl;
+		if(queue.size() == 0) cout << "<Empty>" << endl;
+		else {
+			int a = 0;
+			for(Lab l : queue) {
+				a++;
+				cout << "[" << a << "] " << l.getName() << ": " << l.getDesc() << endl; //Displaying programs' information
+			}
+		}
+
+		cout << endl << result;
+		cout << endl << " -> ";
+		cin >> arg0;
+		if(arg0 == "ADD") {
+			cin >> arg1;
+			if(1 <= arg1 && arg1 <= Lab::getVersions()) {
+				Lab l = Lab::getLab(arg1);
+				queue.push_back(l);
+				result = "OK.";
+			} else result = "Invalid selection!";
+		} else if(arg0 == "DEL") {
+			if(queue.size() > 0) {
+				queue.pop_back();
+				result = "OK.";
+			} else result = "Queue empty already!";
+		} else if(arg0 == "RUN") {
+			system("CLS");
+
+			cin.clear(); //This clears the buffer
+			cin.ignore(100, '\n'); //This ignores any loaded input
+
+			for(Lab l : queue) {
+				cout << "\n==============OUTPUT==============\n";
+				l.runFunction();
+				cout << "\n==============FINISH==============\n\n";
+			}
+		} else if(arg0 == "QUIT") result = "OK.";
+		else result = "Invalid command!";
+	}
+
+	queue.clear();
 	return 0;
 }

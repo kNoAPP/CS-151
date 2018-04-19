@@ -33,3 +33,5 @@ int Lab10B();
 int Lab10C();
 int Lab11A();
 int Lab11B();
+int Lab13();
+int Lab14();
