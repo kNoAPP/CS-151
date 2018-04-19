@@ -18,11 +18,11 @@ private:
 	};
 	Branch* head;
 
-	void inorder(Branch* p) {
+	void branch_inorder(Branch* p) {
 		if(p != NULL) {
-			if(p->left) inorder(p->left);
+			if(p->left) branch_inorder(p->left);
 			cout << " " << p->value << " ";
-			if(p->right) inorder(p->right);
+			if(p->right) branch_inorder(p->right);
 		} else return;
 	}
 	int branch_size(Branch* branch) {
@@ -50,7 +50,7 @@ private:
 public:
 	BinarySearchTree() { head = NULL; }
 	bool isEmpty() { return head == NULL; }
-	void print_inorder() { inorder(head); }
+	void inorder() { branch_inorder(head); }
 	void insert(double x);
 	void search(double x);
 
@@ -146,7 +146,7 @@ int Lab14() {
 			cout << endl
 				 << "Traversal" << endl
 				 << "=========" << endl;
-			bst.print_inorder();
+			bst.inorder();
 			break;
 		case 4:
 			cout << "Size: " << bst.size() << endl;
