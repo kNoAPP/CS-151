@@ -14,11 +14,21 @@
  */
 
 #include "Lab.h" //Header File
+#include "Lab03.h"
+#include "Lab05.h"
+#include "Lab06B.h"
+#include "Lab06C.h"
+#include "Lab08A.h"
+#include "Lab08B.h"
+#include "Lab09AB.h"
+#include "Lab11A.h"
+#include "Lab11B.h"
+#include "Lab14.h"
+
 #include <iostream>
 #include <iomanip>
 #include <string>
 #include <sstream>
-//#include <functional> //Allows me to store function names
 #include <string>
 #include <stdexcept>
 #include <list>
@@ -34,6 +44,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <cstdlib>
+#include "Lab03.h"
+#include "Lab05.h"
 
 using namespace std;
 
@@ -53,164 +65,10 @@ void sign(int);
 
 int multiply(int, int);
 
+void openFile(fstream &file, string descr);
+
 template<class T>
 void reverseArray(T arr[], int size);
-
-int Lab01();
-int Lab02();
-int Lab03();
-int Lab04A();
-int Lab04B();
-int Lab05A();
-int Lab05B();
-int Lab06A();
-int Lab06B();
-int Lab06C();
-int Lab07A();
-int Lab07B();
-int Lab08A();
-int Lab08B();
-int Lab09AB();
-int Lab10A();
-int Lab10B();
-int Lab10C();
-int Lab11A();
-int Lab11B();
-int Lab13();
-int Lab14();
-
-class Lab { //Lab Class, proving a storage unit for names, desc, functions, and flushes for each lab.
-private:
-	string name, desc;
-	int id; //Yuck
-	bool flush;
-
-	static const int VERSIONS = 22; //Indicator of how many labs have been completed.
-		//To restore functional, add in function declarations to the array below. Remove ids.
-	static const Lab labs[VERSIONS];
-public:
-	Lab(string name, int id, string desc, bool flush = false) {
-		this->name = name;
-		this->id = id;
-		this->desc = desc;
-		this->flush = flush;
-	}
-
-	string getName() { return name; }
-	int getId() { return id; }
-	string getDesc() { return desc; }
-	bool shouldFlush() { return flush; }
-	void runFunction() {
-		switch(id) {
-		case 1:
-			Lab01();
-			break;
-		case 2:
-			Lab02();
-			break;
-		case 3:
-			Lab03();
-			break;
-		case 4:
-			Lab04A();
-			break;
-		case 5:
-			Lab04B();
-			break;
-		case 6:
-			Lab04A();
-			break;
-		case 7:
-			Lab04B();
-			break;
-		case 8:
-			Lab06A();
-			break;
-		case 9:
-			Lab06B();
-			break;
-		case 10:
-			Lab06C();
-			break;
-		case 11:
-			Lab07A();
-			break;
-		case 12:
-			Lab07B();
-			break;
-		case 13:
-			Lab08A();
-			break;
-		case 14:
-			Lab08B();
-			break;
-		case 15:
-			Lab09AB();
-			break;
-		case 16:
-			Lab10A();
-			break;
-		case 17:
-			Lab10B();
-			break;
-		case 18:
-			Lab10C();
-			break;
-		case 19:
-			Lab11A();
-			break;
-		case 20:
-			Lab11B();
-			break;
-		case 21:
-			Lab13();
-			break;
-		case 22:
-			Lab14();
-			break;
-		}
-		if(flush) { //Sometimes the cin buffer is not cleared before returning here
-			cin.clear(); //This clears the buffer
-			cin.ignore(100, '\n'); //This ignores any loaded input
-		}
-	}
-
-	static Lab getLab(int id) { return labs[id - 1]; }
-	static int getVersions() { return VERSIONS; }
-	static void displayMenu(bool withQuit) {
-		cout << "ALDEN BANSEMER CS-151 PROGRAM MENU" << endl
-			 << "==================================" << endl;
-		if(withQuit) cout << "0) Quit: Leave this library" << endl;
-		for(int i=0; i<Lab::getVersions(); i++) {
-			Lab l = labs[i];
-			cout << l.getId() << ") " << l.getName() << ": " << l.getDesc() << endl; //Displaying programs' information
-		}
-	}
-};
-
-const Lab Lab::labs[VERSIONS] = { //Declaring all known labs
-			Lab("Lab01", 1, "Sorting Arrays", false),
-			Lab("Lab02", 2, "Manipulating Movie Data", true),
-			Lab("Lab03", 3, "ASCII Encryption", true),
-			Lab("Lab04A", 4, "Capitalizer", false),
-			Lab("Lab04B", 5, "Password Verification", false),
-			Lab("Lab05A", 6, "File Encryption Filter", true),
-			Lab("Lab05B", 7, "File Decryption Filter", true),
-			Lab("Lab06A", 8, "Joke with Punchline", false),
-			Lab("Lab06B", 9, "Recording Sales", true),
-			Lab("Lab06C", 10, "Colored HTML", true),
-			Lab("Lab07A", 11, "Recursive Conversion", false),
-			Lab("Lab07B", 12, "Multiplying using Recursion", true),
-			Lab("Lab08A", 13, "Polymorphism", false),
-			Lab("Lab08B", 14, "Virtual Encryption", true),
-			Lab("Lab09AB", 15, "File Filter and Line Breaks", true),
-			Lab("Lab10A", 16, "Templates and Swapping", false),
-			Lab("Lab10B", 17, "Program 16-14 w/Mods", false),
-			Lab("Lab10C", 18, "Proof of Concept for Lab10A", false),
-			Lab("Lab11A", 19, "Linked Lists", false),
-			Lab("Lab11B", 20, "Animation", false),
-			Lab("Lab13", 21, "Create a Program Queue", false),
-			Lab("Lab14", 22, "Binary Trees", true)};
 
 int main() {
 	string rinput = "";
@@ -434,29 +292,6 @@ double mode(double *array, int size) {
 
 }
 
-class EncryptString03 {
-private:
-	string msg; //Private value may only be accessed by the EncryptString class.
-	int key; //Ditto
-public:
-	EncryptString03(string msg, int key) { //Constructor saves the msg and key within the object
-		this->msg = msg;
-		this->key = key;
-	}
-	string getMessage() { return msg; } //Get the result message
-	int getKey() { return key; } //Get the key
-	void encrypt() { //Encrypt the message by advancing each character forward the key's value.
-		string encrypted = "";
-		for(char c : msg) encrypted += (c + key);
-		msg = encrypted;
-	}
-	void decrypt() { //Decrypt the message by retracting each character backward the key's value.
-		string decrypted = "";
-		for(char c : msg) decrypted += (c - key);
-		msg = decrypted;
-	}
-};
-
 int Lab03() {
 	string msg;
 	cout << "Message: ";
@@ -535,40 +370,6 @@ bool verifyPassword(string pass) {
 	return is8 && hasU && hasL && hasN;
 }
 
-class EncryptString05A {
-private:
-	string msg; //Private value may only be accessed by the EncryptString class.
-	int key; //Ditto
-public:
-	EncryptString05A(int key) { //Constructor saves the msg and key within the object
-		this->msg = "";
-		this->key = key;
-	}
-	string getMessage() { return msg; } //Get the result message
-	void setMessage(string msg) { this->msg = msg; } //Set the message
-	int getKey() { return key; } //Get the key
-	void encrypt() { //Encrypt the message by advancing each character forward the key's value.
-		string encrypted = "";
-		for(char c : msg) {
-			c += key;
-			if(c > 126) c -= 94;
-			if(c < 32) c += 94;
-			encrypted += c;
-		}
-		msg = encrypted;
-	}
-	void decrypt() { //Decrypt the message by retracting each character backward the key's value.
-		string decrypted = "";
-		for(char c : msg) {
-			c -= key;
-			if(c > 126) c -= 94;
-			if(c < 32) c += 94;
-			decrypted += c;
-		}
-		msg = decrypted;
-	}
-};
-
 int Lab05A() {
 	ifstream inputFile("Lab05A-Input.txt"); //Input file
 	ofstream outputFile("Lab05A-Output.txt", ofstream::out | ofstream::trunc); //Output file with automatic clearing
@@ -585,7 +386,7 @@ int Lab05A() {
 
 			cout << "Encrypting to Lab05A-Output.txt..." << endl;
 
-			EncryptString05A es(key); //Prepare the EncryptString object
+			EncryptString05 es(key); //Prepare the EncryptString object
 			string line = "";
 			while(!inputFile.eof()) { //Tick through each line in file
 				getline(inputFile, line); //Read the line (with spaces)
@@ -601,40 +402,6 @@ int Lab05A() {
 	} else cout << "An error occurred while opening the Lab05A-Input.txt file!" << endl; //Error opening input file
 	return 0;
 }
-
-class EncryptString05B {
-private:
-	string msg; //Private value may only be accessed by the EncryptString class.
-	int key; //Ditto
-public:
-	EncryptString05B(int key) { //Constructor saves the msg and key within the object
-		this->msg = "";
-		this->key = key;
-	}
-	string getMessage() { return msg; } //Get the result message
-	void setMessage(string msg) { this->msg = msg; } //Set the message
-	int getKey() { return key; } //Get the key
-	void encrypt() { //Encrypt the message by advancing each character forward the key's value.
-		string encrypted = "";
-		for(char c : msg) {
-			c += key;
-			if(c > 126) c -= 94;
-			if(c < 32) c += 94;
-			encrypted += c;
-		}
-		msg = encrypted;
-	}
-	void decrypt() { //Decrypt the message by retracting each character backward the key's value.
-		string decrypted = "";
-		for(char c : msg) {
-			c -= key;
-			if(c > 126) c -= 94;
-			if(c < 32) c += 94;
-			decrypted += c;
-		}
-		msg = decrypted;
-	}
-};
 
 int Lab05B() {
 	ifstream inputFile("Lab05B-Input.txt"); //Input file
@@ -652,7 +419,7 @@ int Lab05B() {
 
 			cout << "Decrypting to Lab05B-Output.txt..." << endl;
 
-			EncryptString05B es(key); //Prepare the EncryptString object
+			EncryptString05 es(key); //Prepare the EncryptString object
 			string line = "";
 			while(!inputFile.eof()) { //Tick through each line in file
 				getline(inputFile, line); //Read the line (with spaces)
@@ -700,11 +467,6 @@ int Lab06A() {
 	} else cout << "An error occurred while opening one of the Lab06A txt files!" << endl; //Error opening input file
 	return 0;
 }
-
-struct Sales {
-	string name;
-	int sale[4];
-};
 
 int Lab06B() {
 	//Register divisions
@@ -754,18 +516,6 @@ int Lab06B() {
 	else cout << "There was an error logging to Lab06B-Sales.txt!"; //Error with file
 	return 0;
 }
-
-//Format correct HTML encoding
-class ColorCodedStream : public fstream {
-public:
-	void writeInColor(string str, string aColor) {
-		*this << "<span style=\"color:" + aColor + "\"> ";
-		*this << str << "<br /> ";
-		*this << "</span>\n";
-	}
-};
-
-void openFile(fstream &file, string descr);
 
 int Lab06C() {
 	ColorCodedStream outputFile; //Open our color utility encoder
@@ -844,30 +594,6 @@ int multiply(int x, int y) {
 	else return 0; //Return 0 if y hits 0.
 }
 
-class Animal {
-public:
-	Animal() { cout << "Animal constructor...\n"; }
-	virtual ~Animal() { cout << "Animal destructor...\n"; }
-	virtual void showSpecies() { cout << "What AM I?!?\n"; }
-	virtual void makeSound() { cout << "Coughs\n"; }
-};
-
-class Dog: public Animal {
-public:
-	Dog() { cout << "Dog constructor...\n"; }
-	~Dog() { cout << "Dog destructor...\n"; }
-	void showSpecies() { cout << "I'm a dog.\n"; }
-	void makeSound() { cout << "Woof!\n"; }
-};
-
-class Cat: public Animal {
-public:
-	Cat() { cout << "Cat constructor...\n"; }
-	~Cat() { cout << "Cat destructor...\n"; }
-	void showSpecies() { cout << "I'm a cat.\n"; }
-	void makeSound() { cout << "Meow!\n"; }
-};
-
 int Lab08A() {
 
 	Animal *animal = new Animal();
@@ -885,89 +611,6 @@ int Lab08A() {
 	return 0;
 }
 
-class Encryption08B {
-protected:
-	ifstream inFile;
-	ofstream outFile;
-	int keyshift;
-public:
-	Encryption08B(const string& inFileName, const string& outFileName);
-	virtual ~Encryption08B();
-	virtual void setKey(int& keyshift) { this->keyshift = keyshift; }
-	// Pure virtual function
-	virtual string transform(string line) const = 0;
-	// Do the actual work.
-	virtual void encrypt() final;
-};
-
-//**************************************************
-// Constructor opens the input and output file.    *
-//**************************************************
-Encryption08B::Encryption08B(const string& inFileName, const string& outFileName) {
-	this->keyshift = 0;
-	inFile.open(inFileName);
-	outFile.open(outFileName);
-	if(!inFile) {
-		cout << "The file " << inFileName << " cannot be opened.";
-		exit(1);
-	}
-	if(!outFile) {
-		cout << "The file " << outFileName << " cannot be opened.";
-		exit(1);
-	}
-}
-
-//**************************************************
-//Destructor closes files.                         *
-//**************************************************
-Encryption08B::~Encryption08B() {
-	inFile.close();
-	outFile.close();
-}
-
-//*****************************************************
-//Encrypt function uses the virtual transform         *
-//member function to transform individual characters. *
-//*****************************************************
-void Encryption08B::encrypt() {
-	/*
-	char ch;
-	char transCh;
-	inFile.get(ch);
-	while(!inFile.fail()) {
-		transCh = transform(ch);
-		outFile.put(transCh);
-		inFile.get(ch);
-	}
-	*/
-
-	//Why write gross, under-performing code when you can have clean, cool code
-
-	string line = "";
-	while(!inFile.eof()) { //Tick through each line in file
-		getline(inFile, line); //Read the line (with spaces)
-		outFile << transform(line) << endl; //Output the result
-	}
-}
-
-// The subclass simply overides the virtual
-// transformation function
-class SimpleEncryption: public Encryption08B {
-public:
-	string transform(string msg) const override {
-		string encrypted = "";
-		for(char c : msg) {
-			c += keyshift;
-			while(c > 126) c -= 94; //Let's not have problems with bounds
-			while(c < 32) c += 94; //Shall we?
-			encrypted += c;
-		}
-		return encrypted;
-	}
-	SimpleEncryption(const string& inFileName, const string& outFileName) :
-			Encryption08B(inFileName, outFileName) {}
-};
-
 int Lab08B() {
 	string inFileName, outFileName;
 	int keyshift = 0;
@@ -982,79 +625,6 @@ int Lab08B() {
 	obfuscate.encrypt();
 	return 0;
 }
-
-class FileFilter {
-private:
-	int key;
-public:
-	FileFilter(int key=2) {
-		this->key = key;
-	}
-	virtual ~FileFilter() {}
-	char transform(char ch) const {
-		if(ch >= 'a' && ch <= 'z') return ((ch - 'a') + key) % 26 + 'a';
-		else if(ch >= 'A' && ch <= 'Z') return ((ch - 'A') + key) % 26 + 'A';
-		return '?';
-	}
-	virtual void doFilter(ifstream &in, ofstream &out) const=0;
-};
-
-class NewEncryption: public FileFilter {
-public:
-	NewEncryption() {}
-	NewEncryption(int key) : FileFilter(key) {}
-	void doFilter(ifstream &in, ofstream &out) const {
-		string line = "";
-		while(!in.eof()) {
-			string encrypted = "";
-			getline(in, line);
-			for(char c : line) {
-				if(isalpha(c)) encrypted += transform(c);
-				else encrypted += transform(c);
-			}
-			out << encrypted << endl;
-		}
-	}
-};
-
-
-class UpperCase: public FileFilter {
-public:
-	void doFilter(ifstream &in, ofstream &out) const {
-		string line = "";
-		while(!in.eof()) {
-			string capped = "";
-			getline(in, line);
-			for(char c : line) {
-				if(isalpha(c)) capped += static_cast<char>(toupper(c));
-				else capped += c;
-			}
-			out << capped << endl;
-		}
-	}
-};
-
-class Copy: public FileFilter {
-public:
-	void doFilter(ifstream &in, ofstream &out) const {
-		string line = "";
-		while(!in.eof()) {
-			getline(in, line);
-			out << line << endl;
-		}
-	}
-};
-
-class BreakSpace: public FileFilter {
-public:
-	void doFilter(ifstream &in, ofstream &out) const {
-		string line = "";
-		while(!in.eof()) {
-			getline(in, line);
-			out << line << " ";
-		}
-	}
-};
 
 int Lab09AB() {
 	string inName, outName;
@@ -1196,126 +766,6 @@ void reverseArray(T arr[], int size) {
 	}
 }
 
-struct ListNode {
-	double value;
-	ListNode *next;
-
-	ListNode(double value, ListNode *next = nullptr) {
-		this->value = value;
-		this ->next = next;
-	}
-};
-
-class LinkedList {
-private:
-	ListNode *head;
-public:
-	LinkedList() { head = nullptr; }
-		~LinkedList();
-	void add(double x, bool beginning = false);
-	void insert(double x, int pos = 0);
-	void remove(double x);
-	int search(double x);
-	bool isMember(double x);
-	void print();
-	void reverse();
-};
-
-LinkedList::~LinkedList() {
-	ListNode *p = head;
-	ListNode *n;
-	while(p != nullptr) {
-		n = p->next;
-		delete p;
-		p = n;
-	}
-}
-
-void LinkedList::add(double x, bool beginning) {
-	if(!beginning && head != nullptr) {
-		ListNode *p = head;
-		while(p->next != nullptr) p = p->next;
-		p->next = new ListNode(x);
-	} else if(head != nullptr) head = new ListNode(x, head);
-	else head = new ListNode(x);
-}
-
-void LinkedList::insert(double x, int pos) {
-	if(head != nullptr && pos > 0) {
-		ListNode *p = head;
-		while(pos != 1 && p->next != nullptr) {
-			p = p->next;
-			pos--;
-		}
-		p->next = new ListNode(x, p->next);
-	} else if(head != nullptr) head = new ListNode(x, head);
-	else head = new ListNode(x);
-}
-
-void LinkedList::remove(double x) {
-	if(head != nullptr) {
-		ListNode *r;
-		if(head->value == x) {
-			r = head;
-			head = head->next;
-			delete r;
-		} else {
-			ListNode *p = head;
-			while(p->next != nullptr && p->next->value != x) p = p->next;
-
-			if(p->next != nullptr) {
-				r = p->next;
-				p->next = r->next;
-				delete r;
-			}
-		}
-	}
-}
-
-int LinkedList::search(double x) {
-	if(head != nullptr) {
-		int pos = 0;
-		ListNode *p = head;
-		while(p != nullptr) {
-			if(p->value == x) return pos;
-			p = p->next;
-			pos++;
-		}
-	}
-	return -1;
-}
-
-bool LinkedList::isMember(double x) {
-	return search(x) != -1;
-}
-
-
-void LinkedList::print() {
-	if(head != nullptr) {
-		ListNode *p = head;
-		while(p != nullptr) {
-			cout << p->value << endl;
-			p = p->next;
-		}
-	}
-}
-
-void LinkedList::reverse() {
-	if(head != nullptr) {
-		ListNode *p = head;
-		ListNode *temp;
-		ListNode *rev = nullptr;
-
-		while(p) {
-			temp = p;
-			p = p->next;
-			temp->next = rev;
-			rev = temp;
-		}
-		head = rev;
-	}
-}
-
 int Lab11A() {
 	LinkedList ll;
 	ll.add(10);
@@ -1335,37 +785,6 @@ int Lab11A() {
 	p = new ListNode(34.2, p);
 	cout << (*p).value << endl << p->value;
 	return 0;
-}
-
-const HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
-
-class ImageMap:list<COORD> {
-public:
-	void add(COORD coordArray[]);
-	void add(short *coordAsShorts);
-	void displayAt(char ch, int col, int row);
-	void displayAt(int col, int row) { displayAt('*', col, row); }
-	void eraseAt(int col, int row) { displayAt(' ', col, row); }
-};
-
-void ImageMap::add(COORD coordArray[]) {
-	for(int k=0; coordArray[k].X != -1; k++) push_back(coordArray[k]);
-}
-
-void ImageMap::add(short *coordAsShorts) {
-	COORD *pCoord = reinterpret_cast<COORD *>(coordAsShorts);
-	add(pCoord);
-}
-
-void ImageMap::displayAt(char ch, int col, int row) {
-	list<COORD>::iterator iter = this->begin();
-	for(; iter != this->end(); iter++) {
-		COORD currentPos;
-		currentPos.Y = row + iter->Y;
-		currentPos.X = col + iter->X;
-		SetConsoleCursorPosition(console, currentPos);
-		cout << ch << endl;
-	}
 }
 
 int Lab11B() {
@@ -1439,166 +858,6 @@ int Lab11B() {
 	sequence[k]->displayAt(pos, 3);
 	system("cls");
 	return 0;
-}
-
-int Lab13() {
-	list<Lab> queue;
-	string result = "OK.";
-	string arg0 = "";
-	int arg1 = 0;
-
-	while(arg0 != "RUN" && arg0 != "QUIT") {
-		system("CLS");
-		Lab::displayMenu(false);
-		cout << endl << "-=-=Guide=-=-" << endl
-			 << "ADD <# program> - Add a program to the queue." << endl
-			 << "DEL - Remove last program." << endl
-			 << "RUN - Run the queue." << endl
-			 << "QUIT - Quit without running the queue." << endl
-
-			 << endl << "-=-=-Queue=-=-" << endl;
-		if(queue.size() == 0) cout << "<Empty>" << endl;
-		else {
-			int a = 0;
-			for(Lab l : queue) {
-				a++;
-				cout << "[" << a << "] " << l.getName() << ": " << l.getDesc() << endl; //Displaying programs' information
-			}
-		}
-
-		cout << endl << result;
-		cout << endl << " -> ";
-		cin >> arg0;
-		if(arg0 == "ADD") {
-			cin >> arg1;
-			if(1 <= arg1 && arg1 <= Lab::getVersions()) {
-				Lab l = Lab::getLab(arg1);
-				queue.push_back(l);
-				result = "OK.";
-			} else result = "Invalid selection!";
-		} else if(arg0 == "DEL") {
-			if(queue.size() > 0) {
-				queue.pop_back();
-				result = "OK.";
-			} else result = "Queue empty already!";
-		} else if(arg0 == "RUN") {
-			system("CLS");
-
-			cin.clear(); //This clears the buffer
-			cin.ignore(100, '\n'); //This ignores any loaded input
-
-			for(Lab l : queue) {
-				cout << "\n==============OUTPUT==============\n";
-				l.runFunction();
-				cout << "\n==============FINISH==============\n\n";
-			}
-		} else if(arg0 == "QUIT") result = "OK.";
-		else result = "Invalid command!";
-	}
-
-	queue.clear();
-	return 0;
-}
-
-class BinarySearchTree {
-private:
-	struct Branch {
-		Branch* left;
-		Branch* right;
-		double value;
-	};
-	Branch* head;
-
-	void branch_inorder(Branch* p) {
-		if(p != NULL) {
-			if(p->left) branch_inorder(p->left);
-			cout << " " << p->value << " ";
-			if(p->right) branch_inorder(p->right);
-		} else return;
-	}
-	int branch_size(Branch* branch) {
-		if(branch == NULL) return 0;
-		else return branch_size(branch->left) + branch_size(branch->right) + 1;
-	}
-	int leaf_size(Branch* branch) {
-		if(branch == NULL) return 0;
-		if(branch->left == NULL && branch->right == NULL) return 1;
-		else return leaf_size(branch->left) + leaf_size(branch->right);
-	}
-	int branch_height(Branch* branch) {
-		if(branch == NULL) return 0;
-		else {
-			int l = branch_height(branch->left);
-			int r = branch_height(branch->right);
-			return (l > r ? l : r) + 1;
-		}
-	}
-	int branch_width(Branch* branch, int height) {
-		if(branch == NULL) return 0;
-		else if(height == 1) return 1;
-		else return branch_width(branch->left, (height - 1)) + branch_width(branch->right, (height-1));
-	}
-public:
-	BinarySearchTree() { head = NULL; }
-	bool isEmpty() { return head == NULL; }
-	void inorder() { branch_inorder(head); }
-	void insert(double x);
-	void search(double x);
-
-	int size() {
-		if(!isEmpty()) return branch_size(head);
-		else return 0;
-	}
-	int leafCount() {
-		if(!isEmpty()) return leaf_size(head);
-		else return 0;
-	}
-	int height() {
-		if(!isEmpty()) return branch_height(head);
-		else return 0;
-	}
-	int width() {
-		if(!isEmpty()) return branch_width(head, height());
-		else return 0;
-	}
-};
-
-void BinarySearchTree::insert(double x) {
-	Branch* t = new Branch;
-	Branch* parent = NULL;
-	t->value = x;
-	t->left = NULL;
-	t->right = NULL;
-
-	if(!isEmpty()) {
-		Branch* curr = head;
-		while(curr) {
-			parent = curr;
-			if(t->value > curr->value) curr = curr->right;
-			else curr = curr->left;
-		}
-		if(t->value < parent->value) parent->left = t;
-		else parent->right = t;
-	} else head = t;
-
-	cout << "Inserted " << x << " into the tree." << endl;
-}
-
-void BinarySearchTree::search(double x) {
-	if(!isEmpty()) {
-		Branch* curr = head;
-
-		while(curr != NULL) {
-			if(curr->value != x) {
-				if(x > curr->value) curr = curr->right;
-				else curr = curr->left;
-			} else {
-				cout << "Found " << x << " in Binary Tree." << endl;
-				return;
-			}
-		}
-		cout << "Could not find value." << endl;
-	} else cout << "Binary Tree is empty." << endl;
 }
 
 int Lab14() {
