@@ -19,14 +19,8 @@ Encryption08B::Encryption08B(const string& inFileName, const string& outFileName
 	this->keyshift = 0;
 	inFile.open(inFileName);
 	outFile.open(outFileName);
-	if(!inFile) {
-		cout << "The file " << inFileName << " cannot be opened.";
-		exit(1);
-	}
-	if(!outFile) {
-		cout << "The file " << outFileName << " cannot be opened.";
-		exit(1);
-	}
+	if(!inFile) cout << "The file " << inFileName << " cannot be opened.";
+	if(!outFile) cout << "The file " << outFileName << " cannot be opened.";
 }
 
 //**************************************************
